@@ -18,3 +18,12 @@ examples thus some of the code is Copyright © 2001-2013 Python
 Software Foundation; All Rights Reserved under the PSF license (GPL
 compatible) http://docs.python.org/2/library/socketserver.html
 
+I Richard Davidson (rcdavids, 1501248) Did not collaborate with anyone on this assignment.
+Other than the ressources from class I also used:
+https://stackoverflow.com/questions/23086383/how-to-test-nonetype-in-python
+https://docs.python.org/3/library/urllib.parse.html
+https://pymotw.com/3/urllib.parse/
+https://www.w3schools.com/python/python_for_loops.asp
+https://stackoverflow.com/questions/5607551/how-to-urlencode-a-querystring-in-python
+https://www.geeksforgeeks.org/python-accessing-key-value-in-dictionary/
+https://www.tutorialkart.com/python/how-to-find-length-of-bytes-in-python/
