@@ -121,7 +121,8 @@ class HTTPClient(object):
         GetInfo = "GET "+path+ " HTTP/1.1\r\n"
         GetInfo = GetInfo + "Host: " + host_and_port + "\r\n"
         GetInfo = GetInfo + "Connection: close\r\n"
-        GetInfo = GetInfo + "Accept: application/octet-stream\r\n"
+        GetInfo = GetInfo + "Accept: */*\r\n"
+        GetInfo = GetInfo + "Accept-Charset: UTF-8\r\n"
         GetInfo = GetInfo + "User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0\r\n" #this is what I use. Got it by 
         #using the network view in the inspect page of my web browser
         GetInfo = GetInfo + "\r\n" #demonstrates end of the header
@@ -156,6 +157,8 @@ class HTTPClient(object):
         PostInfo = PostInfo + "Host: " + host_and_port + "\r\n"
         PostInfo = PostInfo + "User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0\r\n"
         PostInfo = PostInfo + "Content-type: application/x-www-form-urlencoded \r\n"
+        PostInfo = PostInfo + "Accept: */*\r\n"
+        PostInfo = PostInfo + "Accept-Charset: UTF-8\r\n"
         query = urllib.parse.urlparse(url).query #get the query parameters from our URL
         total_length = len(query)
         request_body = query
