@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # coding: utf-8
-# Copyright 2016 Abram Hindle, https://github.com/tywtyw2002, and https://github.com/treedust
+# Copyright 2016 Richard Davidson, Abram Hindle, https://github.com/tywtyw2002, and https://github.com/treedust
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -149,14 +149,17 @@ class HTTPClient(object):
         #https://docs.python.org/3/library/urllib.parse.html and https://pymotw.com/3/urllib.parse/ used to parse URLs
         host_and_port = urllib.parse.urlparse(url).netloc #get the host and port
         path = urllib.parse.urlparse(url).path
+        if path == "": #if no path supplied in the URL then use the default path ie /
+            path = "/"
         #basic headers that are unchanged is there are or are not args
         PostInfo = "POST "+path+ " HTTP/1.1\r\n"
         PostInfo = PostInfo + "Host: " + host_and_port + "\r\n"
         PostInfo = PostInfo + "User-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0) Gecko/20100101 Firefox/92.0\r\n"
         PostInfo = PostInfo + "Content-type: application/x-www-form-urlencoded \r\n"
+        query = urllib.parse.urlparse(url).query #get the query parameters from our URL
+        total_length = len(query)
+        request_body = query
         if (args is not None): #test to see if there are any paramters
-            total_length = 0
-            request_body = ""
             #https://www.w3schools.com/python/python_for_loops.asp
             for arg in args:
                 if (total_length == 0): #we need this if statement as our first parameter should not start with &
@@ -178,12 +181,9 @@ class HTTPClient(object):
                 formatted_arg_value = urllib.parse.quote_plus(args[arg])
                 request_body = request_body + "="+formatted_arg_value
                 total_length = total_length + len(formatted_arg_value)+1 #add to the total legnth of the body the length of value + length of =
-            PostInfo = PostInfo + "Content-length: "+str(total_length)+ "\r\n" #add our content length
-            PostInfo = PostInfo + "\r\n" #add the CRLF
-            PostInfo = PostInfo + request_body #add the body
-        else:
-            PostInfo = PostInfo + "Content-length: 0\r\n" #no query paramters
-            PostInfo = PostInfo + "\r\n" #add CRLF
+        PostInfo = PostInfo + "Content-length: "+str(total_length)+ "\r\n" #add our content length
+        PostInfo = PostInfo + "\r\n" #add the CRLF
+        PostInfo = PostInfo + request_body #add the body
         self.sendall(PostInfo)
         responseInfo = self.recvall(self.socket)
         body = self.get_body(responseInfo)
